@@ -1,0 +1,50 @@
+<div class="form-container">
+  <h2>Crear/Modificar Hospital</h2>
+  <form [formGroup]="hospitalForm" (ngSubmit)="onSubmit()">
+    <mat-form-field appearance="fill">
+      <mat-label>Nombre</mat-label>
+      <input matInput formControlName="nombre" placeholder="Ingrese el nombre del hospital">
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+      <mat-label>Dirección</mat-label>
+      <input matInput formControlName="direccion" placeholder="Ingrese la dirección del hospital">
+    </mat-form-field>
+    <button mat-raised-button color="primary" type="submit">{{ editMode ? 'Actualizar' : 'Guardar' }}</button>
+  </form>
+</div>
+
+<div class="button-container">
+  <button mat-raised-button color="primary" routerLink="/create" routerLinkActive="active">Crear Hospital</button>
+</div>
+
+<table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+    <!-- ID Column -->
+    <ng-container matColumnDef="id">
+      <th mat-header-cell *matHeaderCellDef>ID</th>
+      <td mat-cell *matCellDef="let hospital">{{ hospital.id }}</td>
+    </ng-container>
+
+    <!-- Nombre Column -->
+    <ng-container matColumnDef="nombre">
+      <th mat-header-cell *matHeaderCellDef>Nombre</th>
+      <td mat-cell *matCellDef="let hospital">{{ hospital.nombre }}</td>
+    </ng-container>
+
+    <!-- Dirección Column -->
+    <ng-container matColumnDef="direccion">
+      <th mat-header-cell *matHeaderCellDef>Dirección</th>
+      <td mat-cell *matCellDef="let hospital">{{ hospital.direccion }}</td>
+    </ng-container>
+
+    <!-- Acciones Column -->
+    <ng-container matColumnDef="acciones">
+      <th mat-header-cell *matHeaderCellDef>Acciones</th>
+      <td mat-cell *matCellDef="let hospital">
+        <button mat-icon-button color="warn" (click)="eliminarHospital(hospital.id)"><mat-icon>delete</mat-icon></button>
+        <button mat-icon-button color="primary" (click)="cargarHospital(hospital)"><mat-icon>edit</mat-icon></button>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+</table>
